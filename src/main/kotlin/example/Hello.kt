@@ -1,25 +1,25 @@
 package example
 
-import JsObj
+import chrome.tabs.InjectDetails
 import chrome.tabs.QueryInfo
-import kotlin.browser.document
-import kotlin.browser.window
+import chrome.tabs.Tab
+import kotlinjs.common.JsObj
 
 fun main(args: Array<String>) {
-    document.addEventListener("DOMContentLoaded", {
-        getCurrentTabUrl { url ->
-            window.alert("current url is: $url")
+    val file = "to-inject-isolated-way.js"
+    currentTab { tab ->
+        chrome.tabs.executeScript(tab.id!!, JsObj<InjectDetails>().apply {
+            this.file = file
+        }) { result ->
+            console.log("Injected $file, result: $result")
         }
-    })
-}
-
-private fun getCurrentTabUrl(callback: (String) -> Unit) {
-    val queryInfo = JsObj<QueryInfo>().apply {
-        active = true
-        currentWindow = true
-    }
-    chrome.tabs.query(queryInfo) { tabs ->
-        tabs.firstOrNull()?.url?.run(callback)
     }
 }
 
+private fun currentTab(fn: (Tab) -> Unit) {
+    chrome.tabs.query(JsObj<QueryInfo>().apply {
+        this.active = true
+    }) { tabs ->
+        tabs.firstOrNull()?.run { fn(this) }
+    }
+}

@@ -1,15 +1,17 @@
 {
   "manifest_version": 2,
-
-  "name": "Get url of current tag",
-  "description": "This extension will alert the url of current tag",
+  "name": "chrome-extension-inject-script-demo",
+  "description": "chrome-extension-inject-script-demo",
   "version": "1.0",
-
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "hello.html"
   },
+  "web_accessible_resources": [
+    "target-functions.js"
+  ],
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "<all_urls>"
   ]
 }

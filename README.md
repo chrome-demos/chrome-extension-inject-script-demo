@@ -1,5 +1,5 @@
-Chrome Extension Using KotlinJs
-================================
+Chrome Extension Inject Script to Current Tab Demo
+==================================================
 
 A simple chrome extension to show current url, written with KotlinJs.
 
